@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'fanout'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.date        = '2015-01-02'
   s.summary     = "Fanout.io library for Ruby"
   s.description = "A Ruby implementation for publishing FPP messages"
