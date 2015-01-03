@@ -30,7 +30,7 @@ class Fanout
   private
 
   def get_pubcontrol
-    if Thread.current.thread_variable_get('pubcontrol').nil?
+    if Thread.current['pubcontrol'].nil?
       if @ssl
         scheme = 'https'
       else
@@ -38,8 +38,8 @@ class Fanout
       end
       pub = PubControl.new('%s://api.fanout.io/realm/%s' % [scheme, @realm])
       pub.set_auth_jwt({'iss' => @realm}, Base64.decode64(@key))
-      Thread.current.thread_variable_set('pubcontrol', pub)
+      Thread.current['pubcontrol'] = pub
     end
-    return Thread.current.thread_variable_get('pubcontrol')
+    return Thread.current['pubcontrol']
   end
 end
