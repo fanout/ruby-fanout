@@ -2,9 +2,8 @@ ruby-fanout
 ===========
 
 Author: Konstantin Bokarius <bokarius@comcast.net>
-Mailing List: http://lists.fanout.io/listinfo.cgi/fanout-users-fanout.io
 
-A Ruby convenience library using the EPCP protocol to publish FPP format messages for Fanout.io.
+A Ruby convenience library for publishing FPP format messages to Fanout.io using the EPCP protocol.
 
 License
 -------
