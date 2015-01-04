@@ -33,5 +33,6 @@ end
 
 fanout = Fanout.new('<myrealm>', '<myrealmkey>')
 fanout.publish('test', 'Test publish!\n')
-fanout.publish_async('test', 'Test async publish!\n', method(:callback))
+fanout.publish_async('test', 'Test async publish!\n',
+    nil, nil, method(:callback))
 ```
