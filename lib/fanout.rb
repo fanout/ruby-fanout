@@ -1,7 +1,8 @@
 #    fanout.rb
 #    ~~~~~~~~~
 #    This module implements the Fanout class.
-#    :copyright: (c) 2014 by Fanout.io.
+#    :authors: Konstantin Bokarius.
+#    :copyright: (c) 2015 by Fanout, Inc.
 #    :license: MIT, see LICENSE for more details.
 
 require 'base64'
