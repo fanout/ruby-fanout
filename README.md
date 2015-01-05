@@ -32,7 +32,7 @@ def callback(result, message)
 end
 
 fanout = Fanout.new('<myrealm>', '<myrealmkey>')
-fanout.publish('test', 'Test publish!\n')
-fanout.publish_async('test', 'Test async publish!\n',
+fanout.publish('<channel>', 'Test publish!\n')
+fanout.publish_async('<channel>', 'Test async publish!\n',
     nil, nil, method(:callback))
 ```
