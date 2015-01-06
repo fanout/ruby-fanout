@@ -38,7 +38,7 @@ fanout = Fanout.new
 # Alternatively specify the realm and/or key.
 fanout = Fanout.new('<myrealm>', '<myrealmkey>')
 
-fanout.publish('<channel>', 'Test publish!\n')
-fanout.publish_async('<channel>', 'Test async publish!\n',
+fanout.publish('<channel>', 'Test publish!')
+fanout.publish_async('<channel>', 'Test async publish!',
     nil, nil, method(:callback))
 ```
