@@ -28,6 +28,11 @@ class Fanout
     pub.publish(channel, Item.new(FppFormat.new(data), id, prev_id))
   end
 
+  def finish
+    pub = get_pubcontrol
+    pub.finish
+  end
+
   def publish_async(channel, data, id=nil, prev_id=nil, callback=nil)
     pub = get_pubcontrol
     pub.publish_async(channel, Item.new(FppFormat.new(data), id, prev_id),
@@ -43,7 +48,8 @@ class Fanout
       else
         scheme = 'http'
       end
-      pub = PubControl.new('%s://api.fanout.io/realm/%s' % [scheme, @realm])
+      pub = PubControlClient.new(
+          '%s://api.fanout.io/realm/%s' % [scheme, @realm])
       pub.set_auth_jwt({'iss' => @realm}, Base64.decode64(@key))
       Thread.current['pubcontrol'] = pub
     end

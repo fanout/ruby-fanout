@@ -1,7 +1,7 @@
 ruby-fanout
 ===========
 
-Author: Konstantin Bokarius <bokarius@comcast.net>
+Author: Konstantin Bokarius <kon@fanout.io>
 
 A Ruby convenience library for publishing FPP format messages to Fanout.io using the EPCP protocol.
 
@@ -41,4 +41,5 @@ fanout = Fanout.new('<myrealm>', '<myrealmkey>')
 fanout.publish('<channel>', 'Test publish!')
 fanout.publish_async('<channel>', 'Test async publish!',
     nil, nil, method(:callback))
+fanout.finish
 ```
