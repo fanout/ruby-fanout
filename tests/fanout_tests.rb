@@ -6,7 +6,7 @@ def callback(result, message)
   end    
 end
 
-fanout = Fanout.new(ENV['FANOUT_REALM'], ENV['FANOUT_KEY'])
+fanout = Fanout.new
 fanout.publish('test', 'Test publish!')
 index = 0
 while index < 20 do
@@ -14,4 +14,3 @@ while index < 20 do
       method(:callback))
   index += 1
 end
-fanout.finish

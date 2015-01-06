@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'fanout'
-  s.version     = '0.1.0'
+  s.version     = '1.0.0'
   s.date        = '2015-01-06'
   s.summary     = 'Fanout.io library for Ruby'
   s.description = 'A Ruby convenience library for publishing FPP format messages to Fanout.io using the EPCP protocol'

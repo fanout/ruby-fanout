@@ -21,16 +21,12 @@ class Fanout
     @realm = realm
     @key = key
     @ssl = ssl
+    at_exit { finish }
   end
 
   def publish(channel, data, id=nil, prev_id=nil)
     pub = get_pubcontrol
     pub.publish(channel, Item.new(FppFormat.new(data), id, prev_id))
-  end
-
-  def finish
-    pub = get_pubcontrol
-    pub.finish
   end
 
   def publish_async(channel, data, id=nil, prev_id=nil, callback=nil)
@@ -40,6 +36,11 @@ class Fanout
   end
 
   private
+
+  def finish
+    pub = get_pubcontrol
+    pub.finish
+  end
 
   def get_pubcontrol
     if Thread.current['pubcontrol'].nil?
