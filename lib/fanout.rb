@@ -11,7 +11,13 @@ require 'pubcontrol'
 require_relative 'fppformat.rb'
 
 class Fanout
-  def initialize(realm, key, ssl=true)
+  def initialize(realm=nil, key=nil, ssl=true)
+    if realm.nil?
+      realm = ENV['FANOUT_REALM']
+    end
+    if key.nil?
+      key = ENV['FANOUT_KEY']
+    end
     @realm = realm
     @key = key
     @ssl = ssl

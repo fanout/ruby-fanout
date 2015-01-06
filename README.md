@@ -31,7 +31,13 @@ def callback(result, message)
   end
 end
 
+# Omitting the realm and key arguments causes Fanout to use
+# the FANOUT_REALM and FANOUT_KEY environmental variables.
+fanout = Fanout.new
+
+# Alternatively specify the realm and/or key.
 fanout = Fanout.new('<myrealm>', '<myrealmkey>')
+
 fanout.publish('<channel>', 'Test publish!\n')
 fanout.publish_async('<channel>', 'Test async publish!\n',
     nil, nil, method(:callback))
