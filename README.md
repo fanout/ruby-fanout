@@ -3,7 +3,7 @@ ruby-fanout
 
 Author: Konstantin Bokarius <kon@fanout.io>
 
-A Ruby convenience library for publishing FPP format messages to Fanout.io using the EPCP protocol.
+A Ruby convenience library for publishing messages to Fanout.io using the EPCP protocol.
 
 License
 -------

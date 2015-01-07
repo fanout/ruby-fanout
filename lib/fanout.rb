@@ -8,7 +8,7 @@
 require 'base64'
 require 'thread'
 require 'pubcontrol'
-require_relative 'fppformat.rb'
+require_relative 'jsonobjectformat.rb'
 
 class Fanout
   def initialize(realm=nil, key=nil, ssl=true)
@@ -26,13 +26,13 @@ class Fanout
 
   def publish(channel, data, id=nil, prev_id=nil)
     pub = get_pubcontrol
-    pub.publish(channel, Item.new(FppFormat.new(data), id, prev_id))
+    pub.publish(channel, Item.new(JsonObjectFormat.new(data), id, prev_id))
   end
 
   def publish_async(channel, data, id=nil, prev_id=nil, callback=nil)
     pub = get_pubcontrol
-    pub.publish_async(channel, Item.new(FppFormat.new(data), id, prev_id),
-        callback)
+    pub.publish_async(channel, Item.new(JsonObjectFormat.new(data), id,
+        prev_id), callback)
   end
 
   private
