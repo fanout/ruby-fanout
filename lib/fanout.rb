@@ -33,7 +33,6 @@ class Fanout
     @realm = realm
     @key = key
     @ssl = ssl
-    at_exit { finish }
   end
 
   # Synchronously publish the specified data to the specified channel for
@@ -80,6 +79,7 @@ class Fanout
       pub = PubControlClient.new(
           '%s://api.fanout.io/realm/%s' % [scheme, @realm])
       pub.set_auth_jwt({'iss' => @realm}, Base64.decode64(@key))
+      at_exit { pub.finish }
       Thread.current['pubcontrol'] = pub
     end
     return Thread.current['pubcontrol']
