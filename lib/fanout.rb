@@ -14,15 +14,15 @@ require_relative 'jsonobjectformat.rb'
 # configured with a Fanout.io realm and associated key. SSL can either
 # be enabled or disabled. As a convenience, the realm and key
 # can also be configured by setting the 'FANOUT_REALM' and 'FANOUT_KEY'
-# environmental variables.
+# environmental variables. Note that unlike the PubControl class
+# there is no need to call the finish method manually, as it will
+# automatically be called when the calling program exits.
 class Fanout
 
   # Initialize with a specified realm, key, and a boolean indicating wther
   # SSL should be enabled or disabled. Note that if the realm and key 
   # are omitted then the initialize method will use the 'FANOUT_REALM'
-  # and 'FANOUT_KEY' environmental variables. Note that unlike the PubControl
-  # class there is no need to call the finish method manually, as it will
-  # automatically be called when the calling program exits.
+  # and 'FANOUT_KEY' environmental variables.
   def initialize(realm=nil, key=nil, ssl=true)
     if realm.nil?
       realm = ENV['FANOUT_REALM']
@@ -55,16 +55,6 @@ class Fanout
   end
 
   private
-
-  # An internal blocking method that calls the finish method on the PubControl
-  # to ensure that all async publishing is completed before returning and
-  # allowing the caller to proceed. Note that unlike the PubControl class
-  # there is no need to call the finish method manually, as it will
-  # automatically be called when the calling program exits.
-  def finish
-    pub = get_pubcontrol
-    pub.finish
-  end
 
   # An internal method used for retrieving the PubControl instance. The
   # PubControl instance is saved as a thread variable and if an instance

@@ -4,20 +4,14 @@ require 'base64'
 require 'minitest/autorun'
 
 class PubControlTestClass
-  attr_accessor :was_finish_called
   attr_accessor :publish_channel
   attr_accessor :publish_item
   attr_accessor :publish_callback
 
   def initialize
-    @was_finish_called = false
     @publish_channel = nil
     @publish_item = nil
     @publish_callback = nil
-  end
-
-  def finish
-    @was_finish_called = true
   end
 
   def publish(channel, item)
@@ -92,13 +86,6 @@ class TestFanout < Minitest::Test
         'https://api.fanout.io/realm/realm')
   end
 
-  def test_finish
-    fo = Fanout.new('realm', 'key', true)
-    pc = PubControlTestClass.new
-    Thread.current['pubcontrol'] = pc
-    fo.send(:finish)
-    assert(pc.was_finish_called)
-  end
 
   def test_publish
     fo = Fanout.new('realm', 'key', true)
