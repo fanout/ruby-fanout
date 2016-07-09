@@ -2,7 +2,7 @@
 #    ~~~~~~~~~
 #    This module implements the Fanout class.
 #    :authors: Konstantin Bokarius.
-#    :copyright: (c) 2015 by Fanout, Inc.
+#    :copyright: (c) 2015-2016 by Fanout, Inc.
 #    :license: MIT, see LICENSE for more details.
 
 require 'base64'
@@ -30,17 +30,21 @@ class Fanout
     if key.nil?
       key = ENV['FANOUT_KEY']
     end
-    @realm = realm
-    @key = key
-    @ssl = ssl
+    if ssl
+      scheme = 'https'
+    else
+      scheme = 'http'
+    end
+    uri = '%s://api.fanout.io/realm/%s' % [scheme, realm]
+    @pub = PubControl.new({'uri' => uri, 'iss' => realm,
+        'key' => Base64.decode64(key)})
   end
 
   # Synchronously publish the specified data to the specified channel for
   # the configured Fanout.io realm. Optionally provide an ID and previous
   # ID to send along with the message.
   def publish(channel, data, id=nil, prev_id=nil)
-    pub = get_pubcontrol
-    pub.publish(channel, Item.new(JsonObjectFormat.new(data), id, prev_id))
+    @pub.publish(channel, Item.new(JsonObjectFormat.new(data), id, prev_id))
   end
 
   # Asynchronously publish the specified data to the specified channel for
@@ -49,29 +53,7 @@ class Fanout
   # called after publishing is complete and passed the result and error message
   # if an error was encountered.
   def publish_async(channel, data, id=nil, prev_id=nil, callback=nil)
-    pub = get_pubcontrol
-    pub.publish_async(channel, Item.new(JsonObjectFormat.new(data), id,
+    @pub.publish_async(channel, Item.new(JsonObjectFormat.new(data), id,
         prev_id), callback)
-  end
-
-  private
-
-  # An internal method used for retrieving the PubControl instance. The
-  # PubControl instance is saved as a thread variable and if an instance
-  # is not available when this method is called then one will be created.
-  def get_pubcontrol
-    if Thread.current['pubcontrol'].nil?
-      if @ssl
-        scheme = 'https'
-      else
-        scheme = 'http'
-      end
-      pub = PubControlClient.new(
-          '%s://api.fanout.io/realm/%s' % [scheme, @realm])
-      pub.set_auth_jwt({'iss' => @realm}, Base64.decode64(@key))
-      at_exit { pub.finish }
-      Thread.current['pubcontrol'] = pub
-    end
-    return Thread.current['pubcontrol']
   end
 end
